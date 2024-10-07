@@ -12,6 +12,7 @@ class Question(models.Model):
         return self.question_text
 
     def was_published_recently(self):
+        """Retourne True si la question a éé  publiée récemment."""
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 
