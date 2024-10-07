@@ -14,7 +14,6 @@ class QuestionAdmin(admin.ModelAdmin):
         return obj.question_text[:20] + ('...' if len(obj.question_text) > 20 else '')
 
 
-
 class ChoiceAdmin(admin.ModelAdmin):
     list_display = ('question', 'choice_text', 'votes')
     list_filter = ['question']
