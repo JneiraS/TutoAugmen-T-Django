@@ -4,9 +4,15 @@ from .models import Question, Choice
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('question_text', 'pub_date', 'was_published_recently')
+    list_display = ('question_text_short', 'pub_date', 'was_published_recently')
     list_filter = ['pub_date']
     search_fields = ['question_text']
+
+    @admin.display(description='Question (tronquée)')
+    def question_text_short(self, obj):
+        """Tronque le texte de la question à 20 caractères"""
+        return obj.question_text[:20] + ('...' if len(obj.question_text) > 20 else '')
+
 
 
 class ChoiceAdmin(admin.ModelAdmin):
@@ -16,4 +22,4 @@ class ChoiceAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Choice, ChoiceAdmin)
+admin.site.register(Choice)
