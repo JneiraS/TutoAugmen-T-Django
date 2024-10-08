@@ -4,7 +4,7 @@ from .models import Question, Choice
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('question_text_short', 'pub_date', 'was_published_recently')
+    list_display = ('question_text_short', 'pub_date', 'was_published_recently', 'age_question')
     list_filter = ['pub_date']
     search_fields = ['question_text']
 
