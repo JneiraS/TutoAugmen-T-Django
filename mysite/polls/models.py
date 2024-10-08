@@ -24,6 +24,11 @@ class Question(models.Model):
         choices = self.choice_set.all()
         return [(choice.choice_text, choice.votes) for choice in choices]
 
+    def get_max_choice(self):
+        """Retourne le choix avec le plus de votes."""
+        choices = self.choice_set.all()
+        return max(choices, key=lambda choice: choice.votes)
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
