@@ -15,9 +15,14 @@ class Question(models.Model):
         """Retourne True si la question a éé  publiée récemment."""
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
-    def age_question(self):
+    def age_question(self) -> int:
         """Retourne l'âge de la question en jours."""
         return (timezone.now() - self.pub_date).days
+
+    def get_choices(self) -> list[tuple[str, int]]:
+        """Retourne la liste des choix de la question ainsi que leur nombre de votes."""
+        choices = self.choice_set.all()
+        return [(choice.choice_text, choice.votes) for choice in choices]
 
 
 class Choice(models.Model):
