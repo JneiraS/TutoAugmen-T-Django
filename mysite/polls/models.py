@@ -9,11 +9,15 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
 
     def __str__(self):
-        return self.question_text
+        return f"{self.question_text} [Date de publication:{self.pub_date.date().strftime('%Y-%m-%d')}]"
 
     def was_published_recently(self):
         """Retourne True si la question a éé  publiée récemment."""
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+
+    def age_question(self):
+        """Retourne l'âge de la question en jours."""
+        return (timezone.now() - self.pub_date).days
 
 
 class Choice(models.Model):
