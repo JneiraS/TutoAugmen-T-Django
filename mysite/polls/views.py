@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 from .models import Question, Choice
-from .forms import QuestionForm, QuestionChoiceForm
+from .forms import QuestionForm, QuestionForm
 
 
 def index(request):
@@ -49,8 +49,7 @@ def new_poll(request):
     if request.method == "POST":
         form = QuestionForm(request.POST)
         if form.is_valid():
-            question = form.save(commit=False)
-            question.save()
+            form.save()
             return redirect(reverse("polls:all"))
 
     else:
