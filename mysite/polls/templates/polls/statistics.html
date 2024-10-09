@@ -1,0 +1,34 @@
+{% extends "polls/base.html" %}
+
+
+{% block content %}
+
+<h1>{% block title %}Statistics{% endblock %}</h1>
+<ul>
+    <li>Nombre total de sondage enregistrés: {{ nb_questions }}</li>
+    <li>Nombre total de choix possibles: {{ nb_choices }}</li>
+    <li>Nombre total de votes: {{ nb_votes.votes__sum }}</li>
+    <li>Moyenne de votes par sondage: {{ average_votes|floatformat:2 }}</li>
+
+    <li>Question avec le plus de votes: {{ mp_questions.question_text }}</li>
+    <li>Question avec le moins de votes: {{ lp_questions.question_text }}</li>
+    <li>{{last_question}}</li>
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
