@@ -1,8 +1,10 @@
 from django.db.models import Sum
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
 from .models import Question, Choice
+from .forms import QuestionForm, QuestionChoiceForm
 
 
 def index(request):
@@ -41,6 +43,20 @@ def statistics(request):
                'lp_questions': least_popular_questions, 'last_question': last_question_added}
 
     return render(request, "polls/statistics.html", context)
+
+
+def new_poll(request):
+    if request.method == "POST":
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.save()
+            return redirect(reverse("polls:all"))
+
+    else:
+        form = QuestionForm()
+    return render(request, "polls/new_poll.html", {"form": form})
+
 
 
 def detail(request, question_id):
