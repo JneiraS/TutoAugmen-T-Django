@@ -1,7 +1,8 @@
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 
-from .models import Question
+from .models import Question, Choice
 
 
 def index(request):
@@ -10,8 +11,7 @@ def index(request):
     return render(request, "polls/index.html", context)
 
 
-def all(request):
-
+def all_questions_by_pub_date(request):
     latest_question_list = Question.objects.order_by("-pub_date")
 
     context = {"latest_question_list": latest_question_list}
@@ -25,6 +25,22 @@ def frequency(request, question_id):
     context = {"question": question, "somme_votes": somme_votes}
 
     return render(request, "polls/frequency.html", context)
+
+
+def statistics(request):
+    total_questions = Question.objects.count()
+    total_choices = Choice.objects.count()
+    total_votes = Choice.objects.aggregate(Sum("votes"))
+    average_votes = total_votes["votes__sum"] / total_questions
+    most_popular_questions = Question.most_or_least_popular_question('-total_votes')
+    least_popular_questions = Question.most_or_least_popular_question('total_votes')
+    last_question_added = Question.objects.last()
+
+    context = {'nb_questions': total_questions, 'nb_choices': total_choices, 'nb_votes': total_votes,
+               'average_votes': average_votes, 'mp_questions': most_popular_questions,
+               'lp_questions': least_popular_questions, 'last_question': last_question_added}
+
+    return render(request, "polls/statistics.html", context)
 
 
 def detail(request, question_id):
