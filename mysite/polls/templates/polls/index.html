@@ -2,6 +2,11 @@
 
 {% block content %}
 
+<h1>Les 5 dernières sondages</h1>
+
+<h2>Créer un sondage</h2>
+<a href="{% url 'polls:new_poll' %}"> Créer un Sondage</a>
+
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
