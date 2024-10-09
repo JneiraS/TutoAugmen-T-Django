@@ -1,3 +1,7 @@
+{% extends "polls/base.html" %}
+
+{% block content %}
+
 {{ question.question_text }}
 
 <ul>
@@ -9,3 +13,5 @@
  {% endif %}
     {% endfor %}
 </ul>
+
+{% endblock %}
