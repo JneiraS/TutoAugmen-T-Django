@@ -1,0 +1,11 @@
+{{ question.question_text }}
+
+<ul>
+{% for choice, votes , pourcentage in question.get_choices %}
+    {%if votes <= 1 %}
+<li>{{ choice }} : {{ votes }} vote, soit : {{ pourcentage }}%</li>
+   {% else %}
+    <li>{{ choice }} : {{ votes }} votes, soit : {{ pourcentage }}%</li>
+ {% endif %}
+    {% endfor %}
+</ul>
