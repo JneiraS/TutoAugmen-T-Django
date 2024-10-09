@@ -11,10 +11,20 @@ def index(request):
 
 
 def all(request):
+
     latest_question_list = Question.objects.order_by("-pub_date")
 
     context = {"latest_question_list": latest_question_list}
     return render(request, "polls/all.html", context)
+
+
+def frequency(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    somme_votes = sum(choice.votes for choice in question.choice_set.all())
+
+    context = {"question": question, "somme_votes": somme_votes}
+
+    return render(request, "polls/frequency.html", context)
 
 
 def detail(request, question_id):
