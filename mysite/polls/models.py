@@ -38,6 +38,21 @@ class Question(models.Model):
         choices = self.choice_set.all()
         return max(choices, key=lambda choice: choice.votes)
 
+    @classmethod
+    def most_or_least_popular_question(cls, order_by: str):
+        """
+        Retourne la question qui a le plus ou le moins de votes.
+        :param order_by:  '-total_votes' ou  'total_votes'
+        """
+        # Ajoute un attribut total_votesà chaque question, qui correspond au nombre total de votes
+        questions_with_total_votes = cls.objects.annotate(total_votes=models.Sum('choice__votes'))
+        # Trie les questions par le nombre total de votes dans l'ordre décroissant
+        ordered_questions = questions_with_total_votes.order_by(order_by)  #
+        # retourne le premier element
+        return ordered_questions.first()
+
+
+
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
