@@ -2,10 +2,10 @@ from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from django.views import generic
 from django.utils import timezone
+from django.views import generic
 
-from .forms import QuestionForm
+from .forms import QuestionForm, ChoiceForm
 from .models import Question, Choice
 
 
@@ -77,18 +77,33 @@ class DetailView(generic.DetailView):
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
+    # PARTIE OPTIONNELLE
+    def post(self, request, *args, **kwargs):
+        # Créer une instance de ChoiceForm avec l'ID de la question et les données POST
+        form = ChoiceForm(question_id=self.kwargs['pk'], data=request.POST)
+
+        if form.is_valid():
+            # On obtient la réponse choisie
+            selected_choice = form.cleaned_data['choice']
+            selected_choice.votes += 1
+            selected_choice.save()
+            return redirect(reverse("polls:index"))
+        else:
+            return self.get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ChoiceForm(question_id=self.kwargs['pk'])
+        return context
+
 
 class ResultsView(generic.DetailView):
     model = Question
     template_name = "polls/results.html"
 
     def get_queryset(self):
-        """
-        Excludes any questions that aren't published yet.
-        """
+        """Excludes any questions that aren't published yet."""
         return Question.objects.filter(pub_date__lte=timezone.now())
-
-
 
 
 def vote(request, question_id):
