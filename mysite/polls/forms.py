@@ -30,3 +30,23 @@ class QuestionForm(forms.ModelForm):
         return question
 
 
+# PARTIE OPTIONNELLE
+class ChoiceForm(forms.ModelForm):
+    """Formulaire de choix pour une question."""
+    choice = forms.ModelChoiceField(
+        queryset=None,
+        widget=forms.RadioSelect,
+        empty_label=None,
+        label='Choix'
+    )
+
+    class Meta:
+        # Le modèle associé: Choice
+        model = Choice
+        fields = ['choice']
+
+    def __init__(self, question_id, *args, **kwargs):
+        """Initialise le formulaire avec les choix de la question."""
+        super().__init__(*args, **kwargs)
+        # Définition de la liste des choix pour le champ 'choice'
+        self.fields['choice'].queryset = Choice.objects.filter(question_id=question_id)
