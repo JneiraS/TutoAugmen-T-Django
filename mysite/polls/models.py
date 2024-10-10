@@ -12,6 +12,9 @@ class Question(models.Model):
     def __str__(self):
         return f"{self.question_text} [Date de publication:{self.pub_date.date().strftime('%Y-%m-%d')}]"
 
+    def __repr__(self): return "<Question: {}>".format(self.question_text)
+
+
     def was_published_recently(self):
         """Retourne True si la question a éé  publiée récemment."""
         now = timezone.now()
