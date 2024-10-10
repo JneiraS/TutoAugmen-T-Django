@@ -4,8 +4,9 @@
 
 <h1>Les 5 dernières sondages</h1>
 
-<h2>Créer un sondage</h2>
-<a href="{% url 'polls:new_poll' %}"> Créer un Sondage</a>
+
+<a href="{% url 'polls:new_poll' %}"> Créer un nouveau sondage</a>
+
 
 {% if latest_question_list %}
     <ul>
