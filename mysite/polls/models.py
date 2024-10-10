@@ -7,14 +7,15 @@ from django.utils import timezone
 
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published' ,auto_now_add=True)
+    pub_date = models.DateTimeField('date published')
 
     def __str__(self):
         return f"{self.question_text} [Date de publication:{self.pub_date.date().strftime('%Y-%m-%d')}]"
 
     def was_published_recently(self):
         """Retourne True si la question a éé  publiée récemment."""
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+        now = timezone.now()
+        return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
     def age_question(self) -> int:
         """Retourne l'âge de la question en jours."""
