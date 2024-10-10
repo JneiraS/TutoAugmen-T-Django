@@ -7,7 +7,7 @@
 <form action="{% url 'polls:new_poll' %}" method="post">
     {% csrf_token %}
 
-    {{ form.as_table }}
+    {{ form.as_div }}
     <input type="submit" value="Créer">
 </form>
 {% endblock %}
