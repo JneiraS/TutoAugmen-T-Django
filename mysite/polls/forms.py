@@ -6,14 +6,15 @@ from .models import Question, Choice
 class QuestionForm(forms.ModelForm):
     choices = forms.CharField(
         widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-        help_text="Entrez les choix séparés par des virgules."
+        help_text="Entrez un choix par ligne."
     )
 
     class Meta:
         model = Question
-        fields = ['question_text', 'choices']
+        fields = ['question_text', 'choices', 'pub_date']
         widgets = {
             'question_text': forms.TextInput(attrs={'class': 'form-control'}),
+            'pub_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
         }
 
     def save(self, commit=True):
