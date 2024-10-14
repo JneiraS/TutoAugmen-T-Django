@@ -1,14 +1,16 @@
 {% extends "polls/base.html" %}
 
 {% block content %}
+<div class = "auth-links">
+    {% if user.is_authenticated %}
+        <p>Bienvenue, {{ user.username }} ! <a href="{% url 'authentification:logout' %}">Déconnexion</a></p>
+    {% else %}
+        <p><a href="{% url 'authentification:login' %}">Connexion</a></p>
+    {% endif %}
+</div>
 
-<a href="{% url 'authentification:logout' %}">Logout</a>
-
-<h1>Les 5 dernières sondages</h1>
-
-
-<a href="{% url 'polls:new_poll' %}"> Créer un nouveau sondage</a>
-
+<h1>Les 5 derniers sondages</h1>
+<a href="{% url 'polls:new_poll' %}">Créer un nouveau sondage</a>
 
 {% if latest_question_list %}
     <ul>
@@ -17,7 +19,7 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No polls are available.</p>
+    <p>Aucun sondage n'est disponible.</p>
 {% endif %}
 
 {% endblock %}
