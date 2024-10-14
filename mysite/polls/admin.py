@@ -12,7 +12,8 @@ class QuestionAdmin(admin.ModelAdmin):
     @admin.display(description='Question (tronquée)')
     def question_text_short(self, obj):
         """Tronque le texte de la question à 20 caractères"""
-        return obj.question_text[:QuestionAdmin.MAX_LENGTH] + ('...' if len(obj.question_text) > QuestionAdmin.MAX_LENGTH else '')
+        return (obj.question_text[:QuestionAdmin.MAX_LENGTH] +
+                ('...' if len(obj.question_text) > QuestionAdmin.MAX_LENGTH else ''))
 
 
 class ChoiceAdmin(admin.ModelAdmin):
