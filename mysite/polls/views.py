@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import QuestionForm, ChoiceForm
 from .models import Question, Choice
@@ -26,15 +27,14 @@ class IndexView(generic.ListView):
 
 def all_questions_by_pub_date(request):
     latest_question_list = Question.objects.order_by("-pub_date")
-
     context = {"latest_question_list": latest_question_list}
+
     return render(request, "polls/all.html", context)
 
 
 def frequency(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     somme_votes = sum(choice.votes for choice in question.choice_set.all())
-
     context = {"question": question, "somme_votes": somme_votes}
 
     return render(request, "polls/frequency.html", context)
