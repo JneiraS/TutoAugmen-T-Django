@@ -1,0 +1,25 @@
+{% extends "polls/base.html" %}
+
+{% block content %}
+<div class = "auth-links">
+    {% if user.is_authenticated %}
+        <p>Bienvenue, {{ user.username }} ! <a href="{% url 'authentification:logout' %}">Déconnexion</a></p>
+    {% else %}
+        <p><a href="{% url 'authentification:login' %}">Connexion</a></p>
+    {% endif %}
+</div>
+
+<h1>Les 5 derniers sondages</h1>
+<a href="{% url 'polls:new_poll' %}">Créer un nouveau sondage</a>
+
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a> ({{ question.pub_date }})</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucun sondage n'est disponible.</p>
+{% endif %}
+
+{% endblock %}
