@@ -10,10 +10,11 @@ wss.on('connection', function connection(ws) {
   // Lorsqu'un message est reçu
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
-    // Envoyer un message à tous les clients connectés
+
+    // Envoyer le message reçu à tous les clients connectés
     wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
+        client.send(message);  // Relayer le message
       }
     });
   });
@@ -21,20 +22,5 @@ wss.on('connection', function connection(ws) {
   // Envoyer un message de bienvenue
   ws.send('Connection established');
 });
-
-// Vérifier les nouvelles données toutes les 5 secondes
-setInterval(() => {
-  db.all('SELECT * FROM polls_question', (err, rows) => {
-    if (err) {
-      console.error(err);
-    } else {
-      wss.clients.forEach(client => {
-        if (client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify(rows));
-        }
-      });
-    }
-  });
-}, 5000);
 
 console.log('WebSocket server is running on ws://localhost:8080');
