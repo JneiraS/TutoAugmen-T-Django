@@ -1,15 +1,19 @@
 {% extends "polls/base.html" %}
+{% load static %}
 
 {% block content %}
 
 <h1>{{ question.question_text }}</h1>
 
-<form method="post">
+<form method="post" id="post-form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Valider</button>
+    <button type="submit" >Valider</button>
   </form>
 
 {% endblock %}
 
+{% block script %}
+<script src="{% static 'polls/ws.js' %}"></script>
+{% endblock %}
 
