@@ -1,18 +1,21 @@
 // Connexion au serveur WebSocket
 const wsSubmit = new WebSocket('ws://localhost:8080');
 
+// Fonction appelée lorsque la connexion au serveur WebSocket est établie.
 wsSubmit.onopen = function() {
   console.log('Connected to WebSocket server on submit page');
 };
-
+// Fonction appelée lorsque le document est chargé.
 document.addEventListener('DOMContentLoaded', function() {
+    // Récupérer le formulaire avec l'ID "post-form".
     const form = document.getElementById('post-form');
-    
+    // Ajouter un gestionnaire d'évènement pour le formulaire.
     form.addEventListener('submit', function(e) {
-        //e.preventDefault(); // commenter pour valider le formulaire
+        //e.preventDefault();
+        // Récupérer la valeur de la case à cocher sélectionnée.
         const selectedChoice = document.querySelector('input[name="choice"]:checked');
         if (selectedChoice) {
-            console.log('Le choix sélectionné est:', selectedChoice.value);
+            console.log('Le choix sélectionné est:', selectedChoice.value); // TODO : peut être supprimé
             
             // Envoie le choix au serveur via WebSocket
             if (wsSubmit.readyState === WebSocket.OPEN) {
@@ -20,8 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.error("WebSocket is not open. Cannot send message.");
             }
-            // Redirige vers la page des résultats
-            //window.location.href = window.location.href.replace('vote', 'results');
         } else {
             console.log('Aucun choix n\'est sélectionné.');
         }
