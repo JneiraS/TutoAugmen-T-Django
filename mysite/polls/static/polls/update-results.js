@@ -15,6 +15,9 @@ wsStatistics.onmessage = function(event) {
     reader.onload = function() {
       const message = reader.result; // Contenu du Blob converti en texte
       console.log('Message from server on statistics page (b): ', message);
+      const nbVotes = parseInt(document.querySelector(`.nb_votes${message}`).innerHTML);
+      document.querySelector(`.nb_votes${message}`).innerHTML = nbVotes+1;
+
     };
     // Lire le Blob en tant que texte
     reader.readAsText(event.data);
@@ -22,11 +25,10 @@ wsStatistics.onmessage = function(event) {
     // Si le message n'est pas un Blob, le traiter directement comme texte
     const message = event.data;
     console.log('Message from server on statistics page (nb): ', message);
+    document.querySelector(`.nb_votes${message}`).innerHTML = message;
+
 
     // Si le message est "refresh-statistics", on rafraîchit la page
-    if (message === 'refresh-statistics') {
-      console.log("Refreshing statistics page...");
-      location.reload(true); // Rafraîchit la page
-    }
   }
+
 };
