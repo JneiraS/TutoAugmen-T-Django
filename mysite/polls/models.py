@@ -1,5 +1,5 @@
 import datetime
-from typing import Any
+from typing import Any, List, Tuple
 
 from django.db import models
 from django.utils import timezone
@@ -28,14 +28,15 @@ class Question(models.Model):
         """Retourne la somme des votes de la question."""
         return sum(choice.votes for choice in self.choice_set.all())
 
-    def get_choices(self) -> list[tuple[Any, Any, float | int | Any]]:
+    def get_choices(self) -> list[tuple[Any, Any, Any, float | int | Any]]:
         """
         Retourne la liste des choix de la question ainsi que leur nombre de votes et leur proportions
         :return:
         """
         choices = self.choice_set.all()
         sum_votes = self.get_sum_votes() if self.get_sum_votes() > 0 else 1
-        return [(choice.choice_text, choice.votes, choice.votes / sum_votes * 100) for choice in choices]
+        return [(choice.id, choice.choice_text, choice.votes, choice.votes / sum_votes * 100) for choice in
+                choices]
 
     def get_max_choice(self):
         """Retourne le choix avec le plus de votes."""
