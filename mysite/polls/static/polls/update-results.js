@@ -1,5 +1,5 @@
 // Client WebSocket sur la page statistics
-const wsStatistics = new WebSocket("ws://localhost:8080");
+const wsStatistics = new WebSocket("ws://92.134.222.0:8089");
 // Fonction appelée lorsque la connexion au serveur WebSocket est établie.
 wsStatistics.onopen = function () {};
 // Fonction appelée lorsque le serveur envoie un message.
@@ -18,9 +18,5 @@ wsStatistics.onmessage = function (event) {
     };
     // Lire le Blob en tant que texte
     reader.readAsText(event.data);
-  } else {
-    // Si le message n'est pas un Blob, le traiter directement comme texte
-    const message = event.data;
-    document.querySelector(`.nb_votes${message}`).innerHTML = message;
   }
 };
