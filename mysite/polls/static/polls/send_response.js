@@ -1,5 +1,5 @@
 // Connexion au serveur WebSocket
-const wsSubmit = new WebSocket('ws://localhost:8080');
+const wsSubmit = new WebSocket('ws://92.134.222.0:8089');
 
 // Fonction appelée lorsque la connexion au serveur WebSocket est établie.
 wsSubmit.onopen = function() {
@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Récupérer la valeur de la case à cocher sélectionnée.
         const selectedChoice = document.querySelector('input[name="choice"]:checked');
         if (selectedChoice) {
-            console.log('Le choix sélectionné est:', selectedChoice.value); // TODO : peut être supprimé
-            
             // Envoie le choix au serveur via WebSocket
             if (wsSubmit.readyState === WebSocket.OPEN) {
                 wsSubmit.send(selectedChoice.value);
