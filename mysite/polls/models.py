@@ -14,7 +14,6 @@ class Question(models.Model):
 
     def __repr__(self): return "<Question: {}>".format(self.question_text)
 
-
     def was_published_recently(self):
         """Retourne True si la question a éé  publiée récemment."""
         now = timezone.now()
@@ -49,14 +48,13 @@ class Question(models.Model):
         Retourne la question qui a le plus ou le moins de votes.
         :param order_by:  '-total_votes' ou  'total_votes'
         """
-        # Ajoute un attribut total_votesà chaque question, qui correspond au nombre total de votes
+        # Ajoute un attribut total_votes à chaque question, qui correspond au nombre total de votes
         questions_with_total_votes = cls.objects.annotate(total_votes=models.Sum('choice__votes'))
+        print(questions_with_total_votes[0].total_votes)  # TODO: supprimer, apres la demo
         # Trie les questions par le nombre total de votes dans l'ordre décroissant
-        ordered_questions = questions_with_total_votes.order_by(order_by)  #
+        ordered_questions = questions_with_total_votes.order_by(order_by)
         # retourne le premier element
         return ordered_questions.first()
-
-
 
 
 class Choice(models.Model):
