@@ -5,7 +5,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import QuestionForm, ChoiceForm
 from .models import Question, Choice
