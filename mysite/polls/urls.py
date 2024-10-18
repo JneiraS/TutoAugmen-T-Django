@@ -12,4 +12,5 @@ urlpatterns = [
     path('<int:question_id>/vote/', views.vote, name='vote'),
     path('statistics/', views.statistics, name='statistics'),
     path('new_poll/', views.new_poll, name='new_poll'),
+    path('chat-bot/', views.chat_bot, name='chat_bot'),
 ]
