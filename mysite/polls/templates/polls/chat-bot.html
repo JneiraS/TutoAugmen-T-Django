@@ -1,0 +1,23 @@
+{% extends "polls/base.html" %}
+{% load static %}
+
+{% block content %}
+<input type="text" id="message" />
+    <button onclick="sendMessage()">Envoyer</button>
+    <div id="output"></div>
+
+    <script>
+        var socket = new WebSocket("ws://localhost:8089");
+
+        socket.onmessage = function(event) {
+            document.getElementById("output").innerHTML += "Reçu: " + event.data + "<br>";
+        };
+
+        function sendMessage() {
+            var message = document.getElementById("message").value;
+            socket.send(message);
+            document.getElementById("output").innerHTML += "Envoyé: " + message + "<br>";
+        }
+    </script>
+
+{% endblock %}

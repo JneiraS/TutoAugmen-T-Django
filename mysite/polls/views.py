@@ -74,7 +74,7 @@ class DetailView(generic.DetailView):
 
     def get_queryset(self):
         """
-        Excludes any questions that aren't published yet.
+        Exclut les questions qui n'ont pas encore été publiées.
         """
         return Question.objects.filter(pub_date__lte=timezone.now())
 
@@ -93,7 +93,9 @@ class DetailView(generic.DetailView):
             return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        """Ajoute le formulaire de vote à la page de details de la question."""
         context = super().get_context_data(**kwargs)
+        # On crée une instance de ChoiceForm avec l'ID de la question
         context['form'] = ChoiceForm(question_id=self.kwargs['pk'])
         return context
 
@@ -109,3 +111,7 @@ class ResultsView(generic.DetailView):
 
 def vote(request, question_id):
     return HttpResponse(f"You're voting on question {question_id}.")
+
+
+def chat_bot(request):
+    return render(request, "polls/chat-bot.html")

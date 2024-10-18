@@ -16,7 +16,7 @@ wsStatistics.onmessage = function (event) {
       const message = reader.result; // Contenu du Blob converti en texte
        const actualNotification = parseInt(document.querySelector(`.notification`).innerHTML
       );
-      document.querySelector(`.notification`).innerHTML += "<li> Notifications: " + message  + "</li>";
+      document.querySelector(`.notification`).innerHTML += "<li>Nouvelle réponse à un sondage</li>";
     };
 
     // Lire le Blob en tant que texte

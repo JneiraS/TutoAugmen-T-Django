@@ -7,7 +7,6 @@ wsStatistics.onmessage = function (event) {
   // Vérifie si le message est un Blob
   if (event.data instanceof Blob) {
     const reader = new FileReader();
-
     // Quand la lecture est terminée, le contenu est dans reader.result
     reader.onload = function () {
       const message = reader.result; // Contenu du Blob converti en texte
