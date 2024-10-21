@@ -1,34 +1,25 @@
 {% extends "polls/base.html" %}
-
+{% load static %}
 
 {% block content %}
 
 <h1>{% block title %}Statistics{% endblock %}</h1>
 <ul>
-    <li>Nombre total de sondage enregistrés: {{ nb_questions }}</li>
-    <li>Nombre total de choix possibles: {{ nb_choices }}</li>
-    <li>Nombre total de votes: {{ nb_votes.votes__sum }}</li>
-    <li>Moyenne de votes par sondage: {{ average_votes|floatformat:2 }}</li>
+    <li>Nombre total de sondage enregistrés: <span>{{ nb_questions }}</span></li>
+    <li>Nombre total de choix possibles: <span>{{ nb_choices }}</span></li>
+    <li>Nombre total de votes: <span id="nb_votes">{{ nb_votes.votes__sum }}</span></li>
+    <li>Moyenne de votes par sondage: <span>{{ average_votes|floatformat:2 }}</span></li>
 
-    <li>Question avec le plus de votes: {{ mp_questions.question_text }}</li>
-    <li>Question avec le moins de votes: {{ lp_questions.question_text }}</li>
-    <li>{{last_question}}</li>
+    <li>Question avec le plus de votes: <span>{{ mp_questions.question_text }}</span></li>
+    <li>Question avec le moins de votes: <span>{{ lp_questions.question_text }}</span></li>
+    <li><span>{{last_question.question_text}}</span></li>
 
 </ul>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 {% endblock %}
+
+{% block script %}
+<script src="{% static 'polls/update-results.js' %}"></script>
+{% endblock %}
+
+

@@ -7,7 +7,17 @@
     <title>Title</title>
 </head>
 <body>
+<ul class="notification">
+
+</ul>
 {% block content %}
+
 {% endblock %}
+
+
+{% block script %}
+<script src="{% static 'polls/ws.js' %}"></script>
+{% endblock %}
+
 </body>
 </html>

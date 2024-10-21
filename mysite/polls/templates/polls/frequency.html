@@ -1,17 +1,18 @@
 {% extends "polls/base.html" %}
-
+{% load static %}
 {% block content %}
 
 {{ question.question_text }}
 
 <ul>
-{% for choice, votes , pourcentage in question.get_choices %}
-    {%if votes <= 1 %}
-<li>{{ choice }} : {{ votes }} vote, soit : {{ pourcentage|floatformat:2  }}%</li>
-   {% else %}
-    <li>{{ choice }} : {{ votes }} votes, soit : {{ pourcentage|floatformat:2  }}%</li>
- {% endif %}
+{% for id,choice, votes , pourcentage in question.get_choices %}
+    <li>{{ choice }} :
+    <span class="nb_votes{{ id }}">{{ votes }}</span> {{ votes|pluralize:"vote,votes" }}, soit : {{ pourcentage|floatformat:2  }}%</li>
     {% endfor %}
 </ul>
 
+{% endblock %}
+
+{% block script %}
+<script src="{% static 'polls/update-results.js' %}"></script>
 {% endblock %}
